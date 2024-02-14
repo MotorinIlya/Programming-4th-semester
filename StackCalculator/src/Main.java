@@ -3,7 +3,12 @@ import java.util.List;
 public class Main {
     static String path = ".\\";
     public static void main(String[] args) {
-        List<String> comands = GetComander.getComands(path, args[0]);
-        ExecuteComander.executeComands(comands);
-    }   
+        if (args.length != 0) {
+            List<String> comands = GetComander.getComands(path, args[0]);
+            ExecuteComander.executeFileComands(comands);
+        }
+        else {
+            ExecuteComander.executeInputComands();
+        }
+    }
 }
