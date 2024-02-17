@@ -23,15 +23,30 @@ public class ExecuteComander {
         String[] signature = comand.split(" ");
         if (signature[0].charAt(0) != '#') {
             try {
-                ComandFactory nameFactory = Determinator.determineComand(signature[0]);
-                Comand name = nameFactory.createComand();
-                if (name instanceof ComandWithParams) {
-                    ((ComandWithParams)name).execute(storage, signature);
-                }
-                else if (name instanceof ComandWithoutParams) {
-                    ((ComandWithoutParams)name).execute(storage);
-                }
+                String comandName = signature[0] + "Factory";
+
+                Class<?> nameFactoryClass = Class.forName(comandName);
+                @SuppressWarnings("deprecation")
+                Object nameFactory = nameFactoryClass.newInstance();
                 
+                if (nameFactory instanceof ComandFactory) {
+                    Comand name = ((ComandFactory)nameFactory).createComand();
+                    if (name instanceof ComandWithParams) {
+                        ((ComandWithParams)name).execute(storage, signature);
+                    }
+                    else if (name instanceof ComandWithoutParams) {
+                        ((ComandWithoutParams)name).execute(storage);
+                    }
+                }             
+            }
+            catch (InstantiationException e) {
+                System.out.println("bad input");
+            }
+            catch (IllegalAccessException e) {
+                System.out.println("bad input");
+            }
+            catch (ClassNotFoundException e) {
+                System.out.println("bad input");
             }
             catch (IllegalArgumentException e) {
                 System.out.println("bad input");
@@ -40,7 +55,7 @@ public class ExecuteComander {
                 System.out.println("Invisible for count");
             }
             catch (NegativeNumberException e) {
-                System.out.println("Нou can't take the root of a negative number");
+                System.out.println("Нow can't take the root of a negative number");
             }
         }
     }

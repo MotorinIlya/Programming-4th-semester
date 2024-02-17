@@ -11,7 +11,7 @@ public class GetComander {
             comands = Files.readAllLines(Paths.get(path + fileName));
         }
         catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("there is no such file");
         }
         return comands;
     }
