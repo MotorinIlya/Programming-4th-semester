@@ -5,11 +5,11 @@ public class Game {
     private GameView gameView;
 
     public Game() {
-        GameModel gameModel = new GameModel();
-        GameView gameView = new GameView();
+        gameModel = new GameModel();
+        gameView = new GameView(gameModel);
     }
 
     public void run() {
-        
+
     }
 }
