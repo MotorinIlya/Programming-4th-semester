@@ -6,8 +6,11 @@ import static com.mot.Constants.*;
 
 public class GameModel {
 
-    static final int COUNT_FIGURE = 7;
+    
     Random random;
+    Figure currentFigure;
+    boolean blocks[] = new boolean[GAME_BLOCKS];
+    int positionFigure[] = new int[FIGURE_BLOCKS];
 
     GameModel () {
         random = new Random();
@@ -48,5 +51,71 @@ public class GameModel {
     public int getPosition(int number) {
         return INDENT_IN_BLOCKS + number % 4 + (number / 4) * BLOCKS_IN_LINE;
     }
+
+    public boolean onRight() {
+        boolean tmp = true;
+        for (int i = 0; i < FIGURE_BLOCKS; i++) {
+            if(((positionFigure[i] + 1) % BLOCKS_IN_LINE) == 0) {
+                tmp = false;
+            }
+        }
+        return tmp;
+    }
+
+    public boolean onLeft() {
+        for (int i = 0; i < FIGURE_BLOCKS; i++) {
+            if((positionFigure[i] % BLOCKS_IN_LINE) == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void flip() {
+
+    }
+
+    public void newFigure() {
+        currentFigure = getFigure();
+        for (int i = 0; i < FIGURE_BLOCKS; i++) {
+            positionFigure[i] = getPosition(currentFigure.getBlock(i));
+        }
+    }
+
+    public void move() {
+        for (int i = FIGURE_BLOCKS - 1; i >= 0; i--) {
+            positionFigure[i] += BLOCKS_IN_LINE;
+        }
+    }
+
+    public void checkFigure() {
+        for (int i = 0; i < FIGURE_BLOCKS; i++) {
+            if ((positionFigure[i] + BLOCKS_IN_LINE >= GAME_BLOCKS) || blocks[positionFigure[i] + BLOCKS_IN_LINE]) {
+                for (int j = 0; j < FIGURE_BLOCKS; j++) {
+                    blocks[positionFigure[j]] = true;
+                }
+                newFigure();
+                break;
+            }
+
+        }
+    }
     
+    public void checkLines() { // блоки не падают
+        for (int i = 0; i < BLOCKS_IN_COLUMN; i++) {
+            int count_blocks = 0;
+            for (int j = 0; j < BLOCKS_IN_LINE; j++) 
+            {
+                if (blocks[i * BLOCKS_IN_LINE + j]) {
+                    count_blocks++;
+                }
+            }
+            if (count_blocks == BLOCKS_IN_LINE) {
+                for (int j = 0; j < BLOCKS_IN_LINE; j++) {
+                    blocks[i * BLOCKS_IN_LINE + j] = false;
+                }
+            }
+        }
+    }
+
 }

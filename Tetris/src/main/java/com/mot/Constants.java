@@ -6,6 +6,7 @@ public final class Constants {
 
     public static final int BLOCK_SIZE = 50;
     public static final int FIGURE_BLOCKS = 4;
+    public static final int COUNT_FIGURE = 7;
 
     public static final int GAME_BLOCKS = (SCREEN_HEIGHT * SCREEN_WIDTH) / (BLOCK_SIZE * BLOCK_SIZE);
     public static final int BLOCKS_IN_LINE = SCREEN_WIDTH / BLOCK_SIZE;

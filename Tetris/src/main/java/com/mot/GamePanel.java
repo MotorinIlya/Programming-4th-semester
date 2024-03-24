@@ -1,23 +1,16 @@
 package com.mot;
 
 import javax.swing.*;
-
-import com.mot.figures.Figure;
-
 import java.awt.event.*;
 import java.awt.*;
 import static com.mot.Constants.*;
 
 public class GamePanel extends JPanel implements ActionListener{
-
-    boolean blocks[] = new boolean[GAME_BLOCKS];
-    int positionFigure[] = new int[FIGURE_BLOCKS];
-
      
     GameModel model;
     Timer timer;
     boolean running = false;
-    Figure currentFigure;
+    
 
     GamePanel(GameModel model) {
         this.model = model;
@@ -31,7 +24,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public void startGame() {
         timer = new Timer(DELAY, this);
         running = true;
-        newFigure();
+        model.newFigure();
         timer.start();
     }
 
@@ -56,7 +49,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public void drawField(Graphics g) {
         g.setColor(Color.green);
         for (int i = 0; i < GAME_BLOCKS; i++) {
-            if (blocks[i]) {
+            if (model.blocks[i]) {
                 g.fillRect(model.getX(i) * BLOCK_SIZE, 
                             model.getY(i) * BLOCK_SIZE, 
                             BLOCK_SIZE, 
@@ -68,78 +61,33 @@ public class GamePanel extends JPanel implements ActionListener{
     public void drawFigure(Graphics g) {
         g.setColor(Color.red);
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            g.fillRect(model.getX(positionFigure[i]) * BLOCK_SIZE, 
-            model.getY(positionFigure[i]) * BLOCK_SIZE, 
+            g.fillRect(model.getX(model.positionFigure[i]) * BLOCK_SIZE, 
+            model.getY(model.positionFigure[i]) * BLOCK_SIZE, 
             BLOCK_SIZE, 
             BLOCK_SIZE);
         }
     }
-
-    public void move() {
-        for (int i = FIGURE_BLOCKS - 1; i >= 0; i--) {
-            positionFigure[i] += BLOCKS_IN_LINE;
-        }
-    }
-
-    public void checkLines() { // блоки не падают
-        for (int i = 0; i < BLOCKS_IN_COLUMN; i++) {
-            int count_blocks = 0;
-            for (int j = 0; j < BLOCKS_IN_LINE; j++) 
-            {
-                if (blocks[i * BLOCKS_IN_LINE + j]) {
-                    count_blocks++;
-                }
-            }
-            if (count_blocks == BLOCKS_IN_LINE) {
-                for (int j = 0; j < BLOCKS_IN_LINE; j++) {
-                    blocks[i * BLOCKS_IN_LINE + j] = false;
-                }
-            }
-        }
-    }
-
-    public void checkFigure() {
-        for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            if ((positionFigure[i] + BLOCKS_IN_LINE >= GAME_BLOCKS) || blocks[positionFigure[i] + BLOCKS_IN_LINE]) {
-                for (int j = 0; j < FIGURE_BLOCKS; j++) {
-                    blocks[positionFigure[j]] = true;
-                }
-                newFigure();
-                break;
-            }
-
-        }
-    }
-
-    public void newFigure() {
-        currentFigure = model.getFigure();
-        for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            positionFigure[i] = getPosition(currentFigure.getBlock(i));
-        }
-    }
-
-
 
     public class GameKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_RIGHT:
-                    if (onRight()) {
+                    if (model.onRight()) {
                         for (int i = 0; i < FIGURE_BLOCKS; i++) {
-                            positionFigure[i]++;
+                            model.positionFigure[i]++;
                         }
                     }
                     break;
                 case KeyEvent.VK_LEFT:
-                    if (onLeft()) {
+                    if (model.onLeft()) {
                         for (int i = 0; i < FIGURE_BLOCKS; i++) {
-                            positionFigure[i]--;
+                            model.positionFigure[i]--;
                         }
                     }
                     break;
                 case KeyEvent.VK_UP:
-                    flip();
+                    model.flip();
                     break;
             }
         }
@@ -147,39 +95,15 @@ public class GamePanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        move();
-        checkFigure();
-        checkLines();
+        model.move();
+        model.checkFigure();
+        model.checkLines();
         repaint();
     }
 
-    private int getPosition(int number) {
-        return INDENT_IN_BLOCKS + number % 4 + (number / 4) * BLOCKS_IN_LINE;
-    }
 
 
 
-    private boolean onRight() {
-        boolean tmp = true;
-        for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            if(((positionFigure[i] + 1) % BLOCKS_IN_LINE) == 0) {
-                tmp = false;
-            }
-        }
-        return tmp;
-    }
-
-    private boolean onLeft() {
-        for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            if((positionFigure[i] % BLOCKS_IN_LINE) == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void flip() {
-
-    }
+    
     
 }
