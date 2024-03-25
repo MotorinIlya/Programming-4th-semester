@@ -15,6 +15,6 @@ public final class Constants {
     public static final int INDENT = (SCREEN_WIDTH - (4 * BLOCK_SIZE)) / 2;
     public static final int INDENT_IN_BLOCKS = INDENT / BLOCK_SIZE;
 
-    public static final int DELAY = 150;
+    public static final int DELAY = 300;
     
 }

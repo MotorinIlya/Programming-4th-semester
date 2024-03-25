@@ -127,7 +127,7 @@ public class GameModel {
                 for (int j = 0; j < BLOCKS_IN_LINE; j++) { //delete line
                     blocks[i * BLOCKS_IN_LINE + j] = false;
                 }
-                for (int j = i * BLOCKS_IN_LINE - 1; j >= BLOCKS_IN_LINE; j--) { //fall blocks
+                for (int j = (i + 1) * BLOCKS_IN_LINE - 1; j >= BLOCKS_IN_LINE; j--) { //fall blocks
                     blocks[j] = blocks[j - BLOCKS_IN_LINE];
                 }
             }
