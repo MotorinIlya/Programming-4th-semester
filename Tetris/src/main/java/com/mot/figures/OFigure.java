@@ -3,6 +3,7 @@ package com.mot.figures;
 public class OFigure extends Figure {
     public OFigure() {
         type = 'O';
+        direction = 'R';
         position = new int[4];
         this.position[0] = 1;
         this.position[1] = 2;

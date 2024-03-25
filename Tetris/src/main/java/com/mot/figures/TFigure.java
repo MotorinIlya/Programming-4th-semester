@@ -3,6 +3,7 @@ package com.mot.figures;
 public class TFigure extends Figure {
     public TFigure() {
         type = 'T';
+        direction = 'R';
         position = new int[4];
         this.position[0] = 0;
         this.position[1] = 1;

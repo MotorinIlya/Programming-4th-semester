@@ -9,8 +9,6 @@ public class GamePanel extends JPanel implements ActionListener{
      
     GameModel model;
     Timer timer;
-    boolean running = false;
-    
 
     GamePanel(GameModel model) {
         this.model = model;
@@ -23,7 +21,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void startGame() {
         timer = new Timer(DELAY, this);
-        running = true;
+        model.running = true;
         model.newFigure();
         timer.start();
     }
@@ -34,16 +32,20 @@ public class GamePanel extends JPanel implements ActionListener{
     }
 
     public void draw(Graphics g) {
-
-        for (int i = 0; i < SCREEN_HEIGHT/BLOCK_SIZE; i++) {
-            g.drawLine(0, i * BLOCK_SIZE, SCREEN_WIDTH, i * BLOCK_SIZE);
+        if (model.running) {
+            for (int i = 0; i < SCREEN_HEIGHT/BLOCK_SIZE; i++) {
+                g.drawLine(0, i * BLOCK_SIZE, SCREEN_WIDTH, i * BLOCK_SIZE);
+            }
+            for (int i = 0; i < SCREEN_WIDTH/BLOCK_SIZE; i++) {
+                g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, SCREEN_HEIGHT);
+            }
+            
+            drawField(g);
+            drawFigure(g);
         }
-        for (int i = 0; i < SCREEN_WIDTH/BLOCK_SIZE; i++) {
-            g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, SCREEN_HEIGHT);
+        else {
+            gameOver(g);
         }
-        
-        drawField(g);
-        drawFigure(g);
     }
 
     public void drawField(Graphics g) {
@@ -95,15 +97,20 @@ public class GamePanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        model.move();
-        model.checkFigure();
-        model.checkLines();
+        if (model.running) {
+            if (model.checkFigure()) {
+                model.move();
+            }
+            model.checkLines();
+            model.checkGameOver();
+        }
         repaint();
     }
 
-
-
-
-    
-    
+    public void gameOver(Graphics g) {
+        g.setColor(Color.red);
+        g.setFont(new Font("GAME OVER", Font.BOLD, 75));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("GAME OVER", (SCREEN_WIDTH - metrics.stringWidth("GAME OVER")) / 2, SCREEN_HEIGHT / 2);
+    }
 }

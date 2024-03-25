@@ -9,6 +9,7 @@ public class GameModel {
     
     Random random;
     Figure currentFigure;
+    boolean running = false;
     boolean blocks[] = new boolean[GAME_BLOCKS];
     int positionFigure[] = new int[FIGURE_BLOCKS];
 
@@ -88,32 +89,44 @@ public class GameModel {
         }
     }
 
-    public void checkFigure() {
+    public boolean checkFigure() {
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
             if ((positionFigure[i] + BLOCKS_IN_LINE >= GAME_BLOCKS) || blocks[positionFigure[i] + BLOCKS_IN_LINE]) {
                 for (int j = 0; j < FIGURE_BLOCKS; j++) {
                     blocks[positionFigure[j]] = true;
                 }
                 newFigure();
-                break;
+                return false;
             }
 
         }
+        return true;
     }
     
-    public void checkLines() { // блоки не падают
+    public void checkLines() {
         for (int i = 0; i < BLOCKS_IN_COLUMN; i++) {
             int count_blocks = 0;
-            for (int j = 0; j < BLOCKS_IN_LINE; j++) 
-            {
+            for (int j = 0; j < BLOCKS_IN_LINE; j++) { //verify lines
                 if (blocks[i * BLOCKS_IN_LINE + j]) {
                     count_blocks++;
                 }
             }
-            if (count_blocks == BLOCKS_IN_LINE) {
-                for (int j = 0; j < BLOCKS_IN_LINE; j++) {
+            if (count_blocks == BLOCKS_IN_LINE) { 
+                for (int j = 0; j < BLOCKS_IN_LINE; j++) { //delete line
                     blocks[i * BLOCKS_IN_LINE + j] = false;
                 }
+                for (int j = i * BLOCKS_IN_LINE - 1; j >= BLOCKS_IN_LINE; j--) { //fall blocks
+                    blocks[j] = blocks[j - BLOCKS_IN_LINE];
+                }
+            }
+        }
+    }
+
+    public void checkGameOver() {
+        for (int i = 0; i < BLOCKS_IN_LINE; i++) {
+            if (blocks[i]) {
+                running = false;
+                break;
             }
         }
     }

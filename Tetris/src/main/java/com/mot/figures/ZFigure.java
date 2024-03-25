@@ -3,6 +3,7 @@ package com.mot.figures;
 public class ZFigure extends Figure{
     public ZFigure() {
         type = 'Z';
+        direction = 'R';
         position = new int[4];
         this.position[0] = 0;
         this.position[1] = 1;
