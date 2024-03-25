@@ -11,33 +11,34 @@ public class GameModel {
     Figure currentFigure;
     boolean running = false;
     boolean blocks[] = new boolean[GAME_BLOCKS];
-    int positionFigure[] = new int[FIGURE_BLOCKS];
 
     GameModel () {
         random = new Random();
+        running = true;
+        newFigure();
     }
 
-    public Figure getFigure() {
+    public void newFigure() {
         int type = random.nextInt(COUNT_FIGURE);
-        return determineFigures(type);
+        currentFigure = determineFigures(type);
     }
 
     private Figure determineFigures(int type) {
         switch (type) {
             case 0:
-                return new IFigure();
+                return new IFigure(this);
             case 1:
-                return new JFigure();
+                return new JFigure(this);
             case 2:
-                return new LFigure();
+                return new LFigure(this);
             case 3:
-                return new OFigure();
+                return new OFigure(this);
             case 4:
-                return new SFigure();
+                return new SFigure(this);
             case 5:
-                return new TFigure();
+                return new TFigure(this);
             default:
-                return new ZFigure();
+                return new ZFigure(this);
         }
     }
 
@@ -49,23 +50,18 @@ public class GameModel {
         return number / BLOCKS_IN_LINE;
     }
 
-    public int getPosition(int number) {
-        return INDENT_IN_BLOCKS + number % 4 + (number / 4) * BLOCKS_IN_LINE;
-    }
-
     public boolean onRight() {
-        boolean tmp = true;
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            if(((positionFigure[i] + 1) % BLOCKS_IN_LINE) == 0) {
-                tmp = false;
+            if(((currentFigure.getBlock(i) + 1) % BLOCKS_IN_LINE) == 0) {
+                return false;
             }
         }
-        return tmp;
+        return true;
     }
 
     public boolean onLeft() {
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            if((positionFigure[i] % BLOCKS_IN_LINE) == 0) {
+            if((currentFigure.getBlock(i) % BLOCKS_IN_LINE) == 0) {
                 return false;
             }
         }
@@ -73,27 +69,43 @@ public class GameModel {
     }
 
     public void flip() {
-
-    }
-
-    public void newFigure() {
-        currentFigure = getFigure();
-        for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            positionFigure[i] = getPosition(currentFigure.getBlock(i));
-        }
+        currentFigure.flip();
     }
 
     public void move() {
-        for (int i = FIGURE_BLOCKS - 1; i >= 0; i--) {
-            positionFigure[i] += BLOCKS_IN_LINE;
+        currentFigure.move();
+    }
+
+    public int getBlock(int i) {
+        return currentFigure.getBlock(i);
+    }
+
+    public boolean isVerifyFlip(int [] position) {
+        for (int i = 0; i < FIGURE_BLOCKS; i++) {
+            if (blocks[position[i]]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void shiftFigure(int shift) {
+        if (shift > 0 && onRight()) {
+            currentFigure.shiftFigure(shift);            
+        }
+        else if (shift < 0 && onLeft()) {
+            currentFigure.shiftFigure(shift);
         }
     }
 
     public boolean checkFigure() {
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            if ((positionFigure[i] + BLOCKS_IN_LINE >= GAME_BLOCKS) || blocks[positionFigure[i] + BLOCKS_IN_LINE]) {
+
+            int isBlock = currentFigure.getBlock(i) + BLOCKS_IN_LINE;
+
+            if ((isBlock >= GAME_BLOCKS) || blocks[isBlock]) {
                 for (int j = 0; j < FIGURE_BLOCKS; j++) {
-                    blocks[positionFigure[j]] = true;
+                    blocks[currentFigure.getBlock(j)] = true;
                 }
                 newFigure();
                 return false;

@@ -21,8 +21,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void startGame() {
         timer = new Timer(DELAY, this);
-        model.running = true;
-        model.newFigure();
         timer.start();
     }
 
@@ -63,8 +61,8 @@ public class GamePanel extends JPanel implements ActionListener{
     public void drawFigure(Graphics g) {
         g.setColor(Color.red);
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
-            g.fillRect(model.getX(model.positionFigure[i]) * BLOCK_SIZE, 
-            model.getY(model.positionFigure[i]) * BLOCK_SIZE, 
+            g.fillRect(model.getX(model.getBlock(i)) * BLOCK_SIZE, 
+            model.getY(model.getBlock(i)) * BLOCK_SIZE, 
             BLOCK_SIZE, 
             BLOCK_SIZE);
         }
@@ -75,18 +73,10 @@ public class GamePanel extends JPanel implements ActionListener{
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_RIGHT:
-                    if (model.onRight()) {
-                        for (int i = 0; i < FIGURE_BLOCKS; i++) {
-                            model.positionFigure[i]++;
-                        }
-                    }
+                    model.shiftFigure(1);
                     break;
                 case KeyEvent.VK_LEFT:
-                    if (model.onLeft()) {
-                        for (int i = 0; i < FIGURE_BLOCKS; i++) {
-                            model.positionFigure[i]--;
-                        }
-                    }
+                    model.shiftFigure(-1);
                     break;
                 case KeyEvent.VK_UP:
                     model.flip();

@@ -1,15 +1,18 @@
 package com.mot.figures;
 
-//fields determine with the position of the part of the figure. 
-// |0|1|2|3|
-// |4|5|6|7|
+import static com.mot.Constants.*;
+
+import com.mot.GameModel;
+
 //all figure have direction: Right, Down, Left and Up. Direction needs for flip figure
 // figure have one of the seven types: I, J, L, O, S, T, Z
 
 public abstract class Figure {
+    protected GameModel model;
     protected char type;
     protected char direction;
-    protected int position[];
+    protected int position[];    // position blocks in field
+    protected int newPosition[]; // for safe flip
 
     public int getBlock(int block) throws IllegalArgumentException {
         if (block > 3) {
@@ -18,5 +21,47 @@ public abstract class Figure {
         else {
             return position[block];
         }
+    }
+
+    public void move() {
+        for (int i = FIGURE_BLOCKS - 1; i >= 0; i--) {
+            position[i] += BLOCKS_IN_LINE;
+        }
+    }
+
+    public void shiftFigure(int shift) {
+        for (int i = 0; i < FIGURE_BLOCKS; i++) {
+            position[i] += shift;
+        }
+    }
+
+    public void flip() {
+        switchDirection();
+    }
+
+    protected void switchDirection() {
+        switch (direction) {
+            case 'R':
+                direction = 'D';
+                break;
+            case 'D':
+                direction = 'L';
+                break;
+            case 'L':
+                direction = 'U';
+                break;
+            case 'U':
+                direction = 'R';
+                break;
+        }
+    }
+
+    protected void isVerifyFlip() {
+        if (model.isVerifyFlip(newPosition)) {
+            for (int i = 0; i < FIGURE_BLOCKS; i++) {
+                position[i] = newPosition[i];
+            }
+        }
+        switchDirection();
     }
 }
