@@ -87,13 +87,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (model.running) {
-            if (model.checkFigure()) {
-                model.move();
-            }
-            model.checkLines();
-            model.checkGameOver();
-        }
+        model.move();
         repaint();
     }
 

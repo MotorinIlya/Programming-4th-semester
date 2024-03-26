@@ -35,9 +35,7 @@ public abstract class Figure {
         }
     }
 
-    public void flip() {
-        switchDirection();
-    }
+    public void flip() {}
 
     protected void switchDirection() {
         switch (direction) {
@@ -58,10 +56,55 @@ public abstract class Figure {
 
     protected void isVerifyFlip() {
         if (model.isVerifyFlip(newPosition)) {
+            verifyOnWall();
             for (int i = 0; i < FIGURE_BLOCKS; i++) {
                 position[i] = newPosition[i];
             }
         }
+        
         switchDirection();
+    }
+
+    protected void verifyOnWall() { // вынести проверку на стены
+        boolean besideLeftWall = false;
+        boolean besideRightWall = false;
+        for (int i = 0; i < FIGURE_BLOCKS; i++) {
+            if (newPosition[i] % BLOCKS_IN_LINE == 0) {
+                besideLeftWall = true;
+            }
+            else if ((newPosition[i] + 1) % BLOCKS_IN_LINE == 0) {
+                besideRightWall = true;
+            }
+        }
+
+        boolean isLeft = false;
+        boolean isRight = false;
+        if (besideRightWall && besideLeftWall) {
+            for (int i = 0; i < FIGURE_BLOCKS; i++) {
+                if (position[i] % BLOCKS_IN_LINE == 0) {
+                   isLeft = true;
+                }
+                else if ((position[i] + 1) % BLOCKS_IN_LINE == 0) {
+                    isRight = true;
+                }
+            }
+        }
+        
+        if (isLeft) {
+            for (int i = 0; i < FIGURE_BLOCKS; i++) {
+                newPosition[i]++;
+            }
+        }
+        else if (isRight) {
+            for (int i = 0; i < FIGURE_BLOCKS; i++) {
+                if (type == 'I') {
+                    newPosition[i] -= 2;
+                }
+                else {
+                    newPosition[i]--;
+                }
+                
+            }
+        }
     }
 }

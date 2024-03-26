@@ -6,7 +6,6 @@ import static com.mot.Constants.*;
 
 public class GameModel {
 
-    
     Random random;
     Figure currentFigure;
     boolean running = false;
@@ -73,7 +72,13 @@ public class GameModel {
     }
 
     public void move() {
-        currentFigure.move();
+        if (running) {
+            if (checkFigure()) {
+                currentFigure.move();
+            }
+            checkLines();
+            checkGameOver();
+        }
     }
 
     public int getBlock(int i) {
@@ -89,7 +94,7 @@ public class GameModel {
         return true;
     }
 
-    public void shiftFigure(int shift) {
+    public void shiftFigure(int shift) { // написать проверку на смещение относительно поля
         if (shift > 0 && onRight()) {
             currentFigure.shiftFigure(shift);            
         }
