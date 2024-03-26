@@ -54,6 +54,9 @@ public class GameModel {
             if(((currentFigure.getBlock(i) + 1) % BLOCKS_IN_LINE) == 0) {
                 return false;
             }
+            else if (blocks[currentFigure.getBlock(i) + 1]) {
+                return false;
+            }
         }
         return true;
     }
@@ -61,6 +64,9 @@ public class GameModel {
     public boolean onLeft() {
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
             if((currentFigure.getBlock(i) % BLOCKS_IN_LINE) == 0) {
+                return false;
+            }
+            else if (blocks[currentFigure.getBlock(i) - 1]) {
                 return false;
             }
         }
@@ -94,7 +100,7 @@ public class GameModel {
         return true;
     }
 
-    public void shiftFigure(int shift) { // написать проверку на смещение относительно поля
+    public void shiftFigure(int shift) {
         if (shift > 0 && onRight()) {
             currentFigure.shiftFigure(shift);            
         }
