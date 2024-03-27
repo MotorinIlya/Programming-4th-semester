@@ -6,14 +6,16 @@ import static com.mot.Constants.*;
 
 public class GameModel {
 
-    Random random;
-    Figure currentFigure;
+    private Random random;
+    private Figure currentFigure;
     boolean running = false;
-    boolean blocks[] = new boolean[GAME_BLOCKS];
+    private boolean blocks[] = new boolean[GAME_BLOCKS];
+    int score;
 
     GameModel () {
         random = new Random();
         running = true;
+        score = 0;
         newFigure();
     }
 
@@ -91,6 +93,10 @@ public class GameModel {
         return currentFigure.getBlock(i);
     }
 
+    public boolean getBlocks(int i) {
+        return blocks[i];
+    }
+
     public boolean isVerifyFlip(int [] position) {
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
             if (blocks[position[i]]) {
@@ -127,6 +133,7 @@ public class GameModel {
     }
     
     public void checkLines() {
+        int countClearLines = 0;
         for (int i = 0; i < BLOCKS_IN_COLUMN; i++) {
             int count_blocks = 0;
             for (int j = 0; j < BLOCKS_IN_LINE; j++) { //verify lines
@@ -135,6 +142,7 @@ public class GameModel {
                 }
             }
             if (count_blocks == BLOCKS_IN_LINE) { 
+                countClearLines++;
                 for (int j = 0; j < BLOCKS_IN_LINE; j++) { //delete line
                     blocks[i * BLOCKS_IN_LINE + j] = false;
                 }
@@ -142,6 +150,9 @@ public class GameModel {
                     blocks[j] = blocks[j - BLOCKS_IN_LINE];
                 }
             }
+        }
+        if (countClearLines > 0) {
+            score += addScore(countClearLines);
         }
     }
 
@@ -152,6 +163,26 @@ public class GameModel {
                 break;
             }
         }
+    }
+
+    public int addScore(int lines) {
+        switch (lines) {
+            case 1:
+                return 40;
+            case 2:
+                return 100;
+            case 3:
+                return 300;
+            case 4:
+                return 1200;
+            default:
+                return 0;
+            
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 
 }

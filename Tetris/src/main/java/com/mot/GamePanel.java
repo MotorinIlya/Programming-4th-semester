@@ -9,6 +9,7 @@ public class GamePanel extends JPanel implements ActionListener{
      
     GameModel model;
     Timer timer;
+    boolean pause;
 
     GamePanel(GameModel model) {
         this.model = model;
@@ -22,6 +23,10 @@ public class GamePanel extends JPanel implements ActionListener{
     public void startGame() {
         timer = new Timer(DELAY, this);
         timer.start();
+    }
+
+    public void pauseGame(Graphics g) {
+        
     }
 
     public void paintComponent(Graphics g) {
@@ -41,6 +46,9 @@ public class GamePanel extends JPanel implements ActionListener{
             drawField(g);
             drawFigure(g);
         }
+        else if (pause) {
+            pauseGame(g);
+        }
         else {
             gameOver(g);
         }
@@ -49,7 +57,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public void drawField(Graphics g) {
         g.setColor(Color.green);
         for (int i = 0; i < GAME_BLOCKS; i++) {
-            if (model.blocks[i]) {
+            if (model.getBlocks(i)) {
                 g.fillRect(model.getX(i) * BLOCK_SIZE, 
                             model.getY(i) * BLOCK_SIZE, 
                             BLOCK_SIZE, 
@@ -81,6 +89,19 @@ public class GamePanel extends JPanel implements ActionListener{
                 case KeyEvent.VK_UP:
                     model.flip();
                     break;
+                case KeyEvent.VK_DOWN:
+                    model.move();
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    if (!pause) {
+                        timer.stop();
+                        pause = true;
+                    }
+                    else {
+                        timer.start();
+                        pause = false;
+                    }
+                    break;
             }
         }
     }
@@ -92,9 +113,11 @@ public class GamePanel extends JPanel implements ActionListener{
     }
 
     public void gameOver(Graphics g) {
-        g.setColor(Color.red);
+        g.setColor(Color.orange);
         g.setFont(new Font("GAME OVER", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("GAME OVER", (SCREEN_WIDTH - metrics.stringWidth("GAME OVER")) / 2, SCREEN_HEIGHT / 2);
+        g.drawString("GAME OVER", (SCREEN_WIDTH - metrics.stringWidth("GAME OVER")) / 2, SCREEN_HEIGHT / 3);
+        g.setColor(Color.white);
+        g.drawString("Score: " + model.getScore(), (SCREEN_WIDTH - metrics.stringWidth("Score: " + model.getScore())) / 2, 2 * SCREEN_HEIGHT / 3);
     }
 }

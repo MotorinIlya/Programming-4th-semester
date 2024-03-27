@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 public class MainPanel extends JFrame {
 
     Image name;
+    JPanel buttons;
+    JPanel records;
     
     MainPanel() {
         super("Tetris");
@@ -25,25 +27,30 @@ public class MainPanel extends JFrame {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                Game game = new Game();
-                game.run();
-                //setVisible(true);
+                dispose();
+                new Game();
             }
         });
         JButton records = new JButton("Records");
         records.setBounds(40, 450, 420, 100);
         records.setBackground(Color.RED);
+        records.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new Records();
+            }
+        });
         JButton exit = new JButton("Exit");
         exit.setBounds(40, 600, 420, 100);
         exit.setBackground(Color.YELLOW);
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                dispose();
             }
         });
-        JPanel buttons = new JPanel() {
+        buttons = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
