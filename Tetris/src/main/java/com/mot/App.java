@@ -4,6 +4,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        new MainPanel();
+        MainPanel Main = new MainPanel();
+        Main.start();
     }
 }
