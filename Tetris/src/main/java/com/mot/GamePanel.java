@@ -24,20 +24,16 @@ public class GamePanel extends JPanel implements ActionListener{
     }
 
     public void draw(Graphics g) {
-        if (model.running) {
-            for (int i = 0; i < SCREEN_HEIGHT/BLOCK_SIZE; i++) {
-                g.drawLine(0, i * BLOCK_SIZE, SCREEN_WIDTH, i * BLOCK_SIZE);
-            }
-            for (int i = 0; i < SCREEN_WIDTH/BLOCK_SIZE; i++) {
-                g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, SCREEN_HEIGHT);
-            }
-            
-            drawField(g);
-            drawFigure(g);
+
+        for (int i = 0; i < SCREEN_HEIGHT/BLOCK_SIZE; i++) {
+            g.drawLine(0, i * BLOCK_SIZE, SCREEN_WIDTH, i * BLOCK_SIZE);
         }
-        else {
-            gameOver(g);
+        for (int i = 0; i < SCREEN_WIDTH/BLOCK_SIZE; i++) {
+            g.drawLine(i * BLOCK_SIZE, 0, i * BLOCK_SIZE, SCREEN_HEIGHT);
         }
+        
+        drawField(g);
+        drawFigure(g);
     }
 
     public void drawField(Graphics g) {
@@ -84,16 +80,9 @@ public class GamePanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        model.move();
-        repaint();
-    }
-
-    public void gameOver(Graphics g) {
-        g.setColor(Color.orange);
-        g.setFont(new Font("GAME OVER", Font.BOLD, 75));
-        FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("GAME OVER", (SCREEN_WIDTH - metrics.stringWidth("GAME OVER")) / 2, SCREEN_HEIGHT / 3);
-        g.setColor(Color.white);
-        g.drawString("Score: " + model.getScore(), (SCREEN_WIDTH - metrics.stringWidth("Score: " + model.getScore())) / 2, 2 * SCREEN_HEIGHT / 3);
+        if (model.running) {
+            model.move();
+            repaint();
+        }
     }
 }

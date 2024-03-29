@@ -8,6 +8,7 @@ import java.awt.event.*;
 public class PausePanel extends JPanel {
 
     PausePanel(JButton buttonToGame, JButton buttonToExit, KeyAdapter pauseAdapter) {
+        super();
         setBackground(Color.black);
         setLayout(new GridBagLayout());
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -28,8 +29,6 @@ public class PausePanel extends JPanel {
     public void addContinueButton(JButton buttonToGame) {
         buttonToGame.setBackground(Color.yellow);
         add(buttonToGame);
-
-        
     }
 
     public void addExitMainButton(JButton buttonToExit) {

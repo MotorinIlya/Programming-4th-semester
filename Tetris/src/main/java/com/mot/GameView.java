@@ -5,14 +5,17 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class GameView extends JFrame{
+public class GameView extends JFrame implements ActionListener{
 
     JPanel cardPanel;
     GamePanel gamePanel;
     PausePanel pausePanel;
-    Timer timer;
+    GameOverPanel gameOverPanel;
+    Timer timerGame;
+    Timer timerOver;
     SwitchKeyListener pauseAdapter;
     boolean pause = false;
+    GameModel model;
     
 
     GameView () {
@@ -25,17 +28,23 @@ public class GameView extends JFrame{
     }
 
     public void start(GameModel model) {
+        this.model = model;
         cardPanel = new JPanel(new CardLayout());
         createGamePanel(model);
         createPausePanel();
+        createGameOverPanel(model);
         add(cardPanel);
         setVisible(true);
     }
 
     public void createGamePanel(GameModel model) {
         gamePanel = new GamePanel(model, pauseAdapter);
-        timer = new Timer(DELAY, gamePanel);
-        timer.start();
+        timerGame = new Timer(DELAY, gamePanel);
+        timerGame.start();
+
+        timerOver = new Timer(DELAY, this);
+        timerOver.start();
+        
         cardPanel.add(gamePanel, GAME);
     }
 
@@ -46,8 +55,23 @@ public class GameView extends JFrame{
         cardPanel.add(pausePanel, PAUSE);
     }
 
-    public class SwitchKeyListener extends KeyAdapter {
+    public void createGameOverPanel(GameModel model) {
+        JButton buttonToExit = new ButtonToExit("Exit");
+        //JButton buttonToRestart = new ButtonToRestart("Restart");
+        gameOverPanel = new GameOverPanel(model, buttonToExit);
+        cardPanel.add(gameOverPanel, GAME_OVER);
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!model.running) {
+            timerGame.stop();
+            CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
+            cardLayout.show(cardPanel, GAME_OVER);
+        }
+    } 
+
+    public class SwitchKeyListener extends KeyAdapter {
         @Override
         public synchronized void keyPressed(KeyEvent e) {
             switch(e.getKeyCode()) {
@@ -55,14 +79,14 @@ public class GameView extends JFrame{
                     CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
                     if (!pause) {
                         pause = true;
-                        timer.stop();
+                        timerGame.stop();
                         cardLayout.show(cardPanel, PAUSE);
                         cardPanel.getComponent(1).requestFocusInWindow();
                         
                     }
                     else {
                         pause = false;
-                        timer.start();
+                        timerGame.start();
                         cardLayout.show(cardPanel, GAME);
                         cardPanel.getComponent(0).requestFocusInWindow();
                     }
@@ -79,7 +103,7 @@ public class GameView extends JFrame{
                 public void actionPerformed(ActionEvent e) {
                     CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
                     pause = false;
-                    timer.start();
+                    timerGame.start();
                     cardLayout.show(cardPanel, GAME);
                     cardPanel.getComponent(0).requestFocusInWindow();
                 }
@@ -100,4 +124,20 @@ public class GameView extends JFrame{
             });
         }
     }
+
+    /*public class ButtonToRestart extends JButton {
+
+        GameModel model;
+        
+        ButtonToRestart(String name, GameModel model) {
+            super(name);
+            this.model = model;
+            addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    model.restart();
+                }
+            });
+        }
+    }*/
 }

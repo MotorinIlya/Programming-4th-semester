@@ -185,4 +185,12 @@ public class GameModel {
         return score;
     }
 
+    public void restart() {
+        for (int i = 0; i < GAME_BLOCKS; i++) {
+            blocks[i] = false;
+        }
+        newFigure();
+        score = 0;
+    }
+
 }

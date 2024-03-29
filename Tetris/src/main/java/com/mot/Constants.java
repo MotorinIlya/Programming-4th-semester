@@ -21,5 +21,5 @@ public final class Constants {
     public static final String PAUSE = "pause";
     public static final String MAIN = "main";
     public static final String RECORDS = "records";
-    
+    public static final String GAME_OVER = "game over";
 }
