@@ -8,25 +8,14 @@ import static com.mot.Constants.*;
 public class GamePanel extends JPanel implements ActionListener{
      
     GameModel model;
-    Timer timer;
-    boolean pause;
 
-    GamePanel(GameModel model) {
+    GamePanel(GameModel model, KeyAdapter pauseAdapter) {
         this.model = model;
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setFocusable(true);
         addKeyListener(new GameKeyListener());
-        startGame();
-    }
-
-    public void startGame() {
-        timer = new Timer(DELAY, this);
-        timer.start();
-    }
-
-    public void pauseGame(Graphics g) {
-        
+        addKeyListener(pauseAdapter);
     }
 
     public void paintComponent(Graphics g) {
@@ -45,9 +34,6 @@ public class GamePanel extends JPanel implements ActionListener{
             
             drawField(g);
             drawFigure(g);
-        }
-        else if (pause) {
-            pauseGame(g);
         }
         else {
             gameOver(g);
@@ -78,7 +64,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public class GameKeyListener extends KeyAdapter {
         @Override
-        public void keyPressed(KeyEvent e) {
+        public synchronized void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_RIGHT:
                     model.shiftFigure(1);
@@ -91,16 +77,6 @@ public class GamePanel extends JPanel implements ActionListener{
                     break;
                 case KeyEvent.VK_DOWN:
                     model.move();
-                    break;
-                case KeyEvent.VK_ESCAPE:
-                    if (!pause) {
-                        timer.stop();
-                        pause = true;
-                    }
-                    else {
-                        timer.start();
-                        pause = false;
-                    }
                     break;
             }
         }

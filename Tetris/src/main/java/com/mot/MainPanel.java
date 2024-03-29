@@ -1,10 +1,9 @@
 package com.mot;
 
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import static com.mot.Constants.*;
 
 public class MainPanel extends JFrame {
 
@@ -17,8 +16,7 @@ public class MainPanel extends JFrame {
         setSize(500, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setLocation(710, 200);
-        
+        setLocationRelativeTo(null);
     }
 
 
@@ -26,8 +24,6 @@ public class MainPanel extends JFrame {
         cardPanel = new JPanel(new CardLayout());
         createButtonsPanel();
         createRecordsPanel();
-        
-        
         add(cardPanel);
         setVisible(true);
     }
@@ -51,7 +47,7 @@ public class MainPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
-                cardLayout.show(cardPanel, "records");
+                cardLayout.show(cardPanel, RECORDS);
             }
         });
 
@@ -73,12 +69,13 @@ public class MainPanel extends JFrame {
                 g.drawImage(name, 0, 0, null);
             }
         };
+        
         buttons.setLayout(null);
         buttons.add(start);
         buttons.add(records);
         buttons.add(exit);
         buttons.setBackground(Color.BLACK);
-        cardPanel.add(buttons, "main");
+        cardPanel.add(buttons, MAIN);
     }
 
 
@@ -92,12 +89,12 @@ public class MainPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
-                cardLayout.show(cardPanel, "main");
+                cardLayout.show(cardPanel, MAIN);
             }
         });
         records.setLayout(null);
         records.add(back);
         records.setBackground(Color.BLACK);
-        cardPanel.add(records, "records");
+        cardPanel.add(records, RECORDS);
     }
 }

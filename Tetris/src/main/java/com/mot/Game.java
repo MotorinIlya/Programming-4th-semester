@@ -6,10 +6,7 @@ public class Game {
 
     public Game() {
         gameModel = new GameModel();
-        gameView = new GameView(gameModel);
-    }
-
-    public void run() {
-
+        gameView = new GameView();
+        gameView.start(gameModel);
     }
 }

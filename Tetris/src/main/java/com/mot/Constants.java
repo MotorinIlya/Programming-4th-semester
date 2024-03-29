@@ -16,5 +16,10 @@ public final class Constants {
     public static final int INDENT_IN_BLOCKS = INDENT / BLOCK_SIZE;
 
     public static final int DELAY = 300;
+
+    public static final String GAME = "game";
+    public static final String PAUSE = "pause";
+    public static final String MAIN = "main";
+    public static final String RECORDS = "records";
     
 }
