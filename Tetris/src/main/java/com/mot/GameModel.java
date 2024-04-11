@@ -1,5 +1,7 @@
 package com.mot;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 import com.mot.figures.*;
 import static com.mot.Constants.*;
@@ -191,6 +193,20 @@ public class GameModel {
         }
         newFigure();
         score = 0;
+    }
+
+    public void writeScore() {
+        if (score > 0) {
+            try (FileWriter writer = new FileWriter("./src/main/resouces/records.txt", true)) {
+                writer.write(Integer.toString(score));
+                writer.append('\n');
+                writer.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
     }
 
 }

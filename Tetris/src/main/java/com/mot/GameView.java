@@ -68,6 +68,8 @@ public class GameView extends JFrame implements ActionListener{
             timerGame.stop();
             CardLayout cardLayout = (CardLayout) cardPanel.getLayout();
             cardLayout.show(cardPanel, GAME_OVER);
+            model.writeScore();
+            timerOver.stop();
         }
     } 
 
