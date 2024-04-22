@@ -1,8 +1,8 @@
-package com.mot.figures;
+package com.mot.model.figures;
 
 import static com.mot.Constants.*;
 
-import com.mot.GameModel;
+import com.mot.model.GameModel;
 
 //all figure have direction: Right, Down, Left and Up. Direction needs for flip figure
 // figure have one of the seven types: I, J, L, O, S, T, Z

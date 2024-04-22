@@ -1,7 +1,8 @@
-package com.mot.figures;
+package com.mot.model.figures;
 
 import static com.mot.Constants.*;
-import com.mot.GameModel;
+
+import com.mot.model.GameModel;
 
 public class IFigure extends Figure{
     public IFigure(GameModel model) {

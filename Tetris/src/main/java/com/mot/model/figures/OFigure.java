@@ -1,6 +1,6 @@
-package com.mot.figures;
+package com.mot.model.figures;
 
-import com.mot.GameModel;
+import com.mot.model.GameModel;
 
 public class OFigure extends Figure {
     public OFigure(GameModel model) {

@@ -1,18 +1,22 @@
-package com.mot;
+package com.mot.model;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
-import com.mot.figures.*;
+
+import com.mot.model.figures.*;
+
 import static com.mot.Constants.*;
 
 public class GameModel {
 
     private Random random;
     private Figure currentFigure;
-    boolean running = false;
+    
     private boolean blocks[] = new boolean[GAME_BLOCKS];
-    int score;
+
+    public int score;
+    public boolean running = false;
 
     GameModel () {
         random = new Random();
@@ -78,7 +82,9 @@ public class GameModel {
     }
 
     public void flip() {
-        currentFigure.flip();
+        if (running) {
+            currentFigure.flip();
+        }
     }
 
     public void move() {
@@ -109,12 +115,15 @@ public class GameModel {
     }
 
     public void shiftFigure(int shift) {
-        if (shift > 0 && onRight()) {
-            currentFigure.shiftFigure(shift);            
+        if (running) {
+            if (shift > 0 && onRight()) {
+                currentFigure.shiftFigure(shift);            
+            }
+            else if (shift < 0 && onLeft()) {
+                currentFigure.shiftFigure(shift);
+            }
         }
-        else if (shift < 0 && onLeft()) {
-            currentFigure.shiftFigure(shift);
-        }
+        
     }
 
     public boolean checkFigure() {

@@ -17,9 +17,22 @@ public final class Constants {
 
     public static final int DELAY = 300;
 
+    //name game card panels
     public static final String GAME = "game";
     public static final String PAUSE = "pause";
+    public static final String GAME_OVER = "game over";
+
+    //name menu card panels
     public static final String MAIN = "main";
     public static final String RECORDS = "records";
-    public static final String GAME_OVER = "game over";
+
+    //name menu buttons
+    public static final String BUTTON_RECORDS = "Records";
+    public static final String BUTTON_EXIT = "Exit";
+    public static final String BUTTON_START = "Start";
+    public static final String BUTTON_BACK_MENU = "Back";
+
+    //name game buttons
+    public static final String BUTTON_TO_GAME = "Game";
+    //public static final String BUTTON_GAME_OVER_EXIT = "Game over exit";
 }

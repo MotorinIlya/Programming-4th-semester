@@ -1,9 +1,9 @@
-package com.mot.figures;
+package com.mot.model.figures;
 
 import static com.mot.Constants.BLOCKS_IN_LINE;
 import static com.mot.Constants.FIGURE_BLOCKS;
 
-import com.mot.GameModel;
+import com.mot.model.GameModel;
 
 public class ZFigure extends Figure{
     public ZFigure(GameModel model) {
