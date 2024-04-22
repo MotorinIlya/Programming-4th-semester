@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Observer{
         
         drawField(g);
         drawFigure(g);
+        drawScore(g);
     }
 
     public void drawField(Graphics g) {
@@ -57,6 +58,14 @@ public class GamePanel extends JPanel implements Observer{
                             BLOCK_SIZE);
             }
         }
+    }
+
+    public void drawScore(Graphics g) {
+        g.setColor(Color.white);
+        g.setFont(new Font("score", Font.BOLD, 20));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("score: " + gameController.getScore(), 
+                    (SCREEN_WIDTH - metrics.stringWidth("score: " + gameController.getScore())), 50);
     }
 
     public void drawFigure(Graphics g) {

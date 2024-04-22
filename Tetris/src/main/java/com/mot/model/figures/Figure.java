@@ -60,9 +60,8 @@ public abstract class Figure {
             for (int i = 0; i < FIGURE_BLOCKS; i++) {
                 position[i] = newPosition[i];
             }
+            switchDirection();
         }
-        
-        switchDirection();
     }
 
     protected void verifyOnWall() {
