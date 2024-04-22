@@ -11,7 +11,7 @@ public class MainView extends JFrame {
 
     private JPanel cardPanel;
     private ButtonsMenuPanel buttons;
-    private JPanel records;
+    private RecordsPanel records;
 
     private CardLayout cardLayout;
     private final MenuController menuController;

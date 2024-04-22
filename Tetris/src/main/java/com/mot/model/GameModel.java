@@ -110,6 +110,10 @@ public class GameModel {
         return blocks[i];
     }
 
+    public void run() {
+        running = true;
+    }
+
     public boolean isVerifyFlip(int [] position) {
         for (int i = 0; i < FIGURE_BLOCKS; i++) {
             if (position[i] < 0) {

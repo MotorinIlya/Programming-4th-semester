@@ -12,7 +12,7 @@ import static com.mot.Constants.*;
 
 import java.awt.event.*;
 
-public class GameController extends Observable implements ActionListener, KeyListener{
+public class GameController extends Observable implements ActionListener, KeyListener {
 
     private GameModel gameModel;
     private GameView gameView;
@@ -46,11 +46,7 @@ public class GameController extends Observable implements ActionListener, KeyLis
         return gameModel.getBlock(index);
     }
 
-    public void move() {
-        gameModel.move();
-    }
-
-    public int getScore() {
+    public Integer getScore() {
         return gameModel.getScore();
     }
 
@@ -58,7 +54,7 @@ public class GameController extends Observable implements ActionListener, KeyLis
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         if (cmd == BUTTON_TO_GAME) {
-            gameModel.running = true;
+            gameModel.run();
             timer.start();
             update(new ToGameEvent());
         }
