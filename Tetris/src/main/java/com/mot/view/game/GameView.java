@@ -75,7 +75,11 @@ public class GameView extends JFrame implements Observer {
         }
         else if (event instanceof GameOverEvent) {
             cardLayout.show(cardPanel, GAME_OVER);
-            pausePanel.requestFocusInWindow();
+            gameOverPanel.requestFocusInWindow();
+        }
+        else if (event instanceof RestartEvent) {
+            cardLayout.show(cardPanel, GAME);
+            gamePanel.requestFocusInWindow();
         }
     }
 }

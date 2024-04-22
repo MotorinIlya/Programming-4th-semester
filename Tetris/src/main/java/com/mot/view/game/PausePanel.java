@@ -25,6 +25,7 @@ public class PausePanel extends JPanel implements Observer {
         setFocusable(true);
 
         addKeyListener(gameController);
+        addRestartButton();
         addContinueButton();
         addExitMainButton();
     }
@@ -51,6 +52,13 @@ public class PausePanel extends JPanel implements Observer {
         buttonToExit.addActionListener(gameController);
         buttonToExit.setBackground(Color.green);
         add(buttonToExit);
+    }
+
+    public void addRestartButton() {
+        JButton restartButton = new JButton(BUTTON_RESTART);
+        restartButton.addActionListener(gameController);
+        restartButton.setBackground(Color.white);
+        add(restartButton);
     }
 
     @Override

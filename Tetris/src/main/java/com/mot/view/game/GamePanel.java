@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import com.mot.controller.GameController;
 import com.mot.event.Event;
+import com.mot.event.RestartEvent;
 import com.mot.event.UpdatePositionEvent;
 import com.mot.event.UpdateWatchEvent;
 import com.mot.service.Observer;
@@ -74,6 +75,9 @@ public class GamePanel extends JPanel implements Observer{
             repaint();
         }
         else if (event instanceof UpdatePositionEvent) {
+            repaint();
+        }
+        else if (event instanceof RestartEvent) {
             repaint();
         }
     }

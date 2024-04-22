@@ -67,6 +67,12 @@ public class GameController extends Observable implements ActionListener, KeyLis
             gameView.dispose();
             new MainView();
         }
+        else if (cmd == BUTTON_RESTART) {
+            gameModel.restart();
+            timer.start();
+            update(new RestartEvent());
+
+        }
 
         gameModel.move();
         update(new UpdateWatchEvent());

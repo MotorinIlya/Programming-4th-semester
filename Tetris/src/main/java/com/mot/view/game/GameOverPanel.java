@@ -24,7 +24,7 @@ public class GameOverPanel extends JPanel implements Observer{
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setFocusable(true);
 
-        //addRestartButton(buttonToRestart);
+        addRestartButton();
         addExitMainButton();
     }
 
@@ -41,16 +41,18 @@ public class GameOverPanel extends JPanel implements Observer{
                     2 * SCREEN_HEIGHT / 3);
     }
 
-    /*public void addRestartButton(JButton buttonToRestart) {
-        //buttonToRestart.setBackground(Color.yellow);
-        //add(buttonToRestart);
-    }*/
-
     public void addExitMainButton() {
         JButton buttonToExit = new JButton(BUTTON_EXIT);
         buttonToExit.addActionListener(gameController);
         buttonToExit.setBackground(Color.green);
         add(buttonToExit);
+    }
+
+    public void addRestartButton() {
+        JButton restartButton = new JButton(BUTTON_RESTART);
+        restartButton.addActionListener(gameController);
+        restartButton.setBackground(Color.white);
+        add(restartButton);
     }
 
     @Override

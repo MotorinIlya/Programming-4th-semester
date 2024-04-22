@@ -208,6 +208,8 @@ public class GameModel {
         }
         newFigure();
         score = 0;
+        running = true;
+        gameOver = false;
     }
 
     public void writeScore() {

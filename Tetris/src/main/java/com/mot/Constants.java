@@ -31,6 +31,7 @@ public final class Constants {
     public static final String BUTTON_EXIT = "Exit";
     public static final String BUTTON_START = "Start";
     public static final String BUTTON_BACK_MENU = "Back";
+    public static final String BUTTON_RESTART = "Restart";
 
     //name game buttons
     public static final String BUTTON_TO_GAME = "Game";
