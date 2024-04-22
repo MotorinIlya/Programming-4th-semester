@@ -28,10 +28,12 @@ public class MenuController extends Observable implements ActionListener {
                 break;
             case "Records":
                 mainPanel.switchPanel(RECORDS);
+                break;
             case "Exit":
                 System.exit(0);
             case "Back":
                 mainPanel.switchPanel(MAIN);
+                break;
         }
     }
 }

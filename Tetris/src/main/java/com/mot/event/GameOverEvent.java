@@ -1,5 +1,5 @@
 package com.mot.event;
 
-public class GameOverEvent {
+public class GameOverEvent implements Event {
     
 }

@@ -65,7 +65,7 @@ public abstract class Figure {
         switchDirection();
     }
 
-    protected void verifyOnWall() { // вынести проверку на стены
+    protected void verifyOnWall() {
         boolean besideLeftWall = false;
         boolean besideRightWall = false;
         for (int i = 0; i < FIGURE_BLOCKS; i++) {

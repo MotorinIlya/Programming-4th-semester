@@ -34,5 +34,4 @@ public final class Constants {
 
     //name game buttons
     public static final String BUTTON_TO_GAME = "Game";
-    //public static final String BUTTON_GAME_OVER_EXIT = "Game over exit";
 }

@@ -46,7 +46,7 @@ public class GameController extends Observable implements ActionListener, KeyLis
         return gameModel.getBlock(index);
     }
 
-    public void move() { //добавить running
+    public void move() {
         gameModel.move();
     }
 
@@ -70,6 +70,10 @@ public class GameController extends Observable implements ActionListener, KeyLis
 
         gameModel.move();
         update(new UpdateWatchEvent());
+
+        if (gameModel.isGameOver()) {
+            update(new GameOverEvent());
+        }
     }
 
     @Override

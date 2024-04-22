@@ -17,6 +17,7 @@ public class GameModel {
 
     public int score;
     public boolean running = false;
+    private boolean gameOver = false;
 
     GameModel () {
         random = new Random();
@@ -55,6 +56,10 @@ public class GameModel {
 
     public int getY(int number) {
         return number / BLOCKS_IN_LINE;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     public boolean onRight() {
@@ -171,6 +176,7 @@ public class GameModel {
         for (int i = 0; i < BLOCKS_IN_LINE; i++) {
             if (blocks[i]) {
                 running = false;
+                gameOver = true;
                 break;
             }
         }
