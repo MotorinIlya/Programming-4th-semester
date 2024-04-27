@@ -1,5 +1,8 @@
+package com.mot.storage;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +11,7 @@ public class StorageValue {
     static private Deque<Double> stack;
     static private Map<String, Double> dictParams;
 
-    StorageValue() {
+    public StorageValue() {
         stack = new ArrayDeque<Double>();
         dictParams = new HashMap<String, Double>();
     }
@@ -17,11 +20,11 @@ public class StorageValue {
         stack.push(value);
     }
 
-    public Double pop() throws StackEmptyException {
+    public Double pop() throws EmptyStackException {
         if (!stack.isEmpty()) {
             return stack.pop();
         }
-        else { throw new StackEmptyException(); }
+        else { throw new EmptyStackException(); }
     }
 
     public boolean isEmpty() {

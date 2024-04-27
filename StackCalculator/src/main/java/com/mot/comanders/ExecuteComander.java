@@ -1,4 +1,12 @@
+package com.mot.comanders;
+
+import java.util.EmptyStackException;
 import java.util.List;
+import com.mot.commands.*;
+import com.mot.fabric.*;
+import com.mot.storage.*;
+import com.mot.exceptions.*;
+
 
 public class ExecuteComander {
     public static void executeFileComands(List<String> comands) {
@@ -23,21 +31,17 @@ public class ExecuteComander {
         String[] signature = comand.split(" ");
         if (signature[0].charAt(0) != '#') {
             try {
-                String comandName = signature[0] + "Factory";
+                String comandName = "com.mot.commands." + signature[0];
 
-                Class<?> nameFactoryClass = Class.forName(comandName);
-                @SuppressWarnings("deprecation")
-                Object nameFactory = nameFactoryClass.newInstance();
-                
-                if (nameFactory instanceof ComandFactory) {
-                    Comand name = ((ComandFactory)nameFactory).createComand();
-                    if (name instanceof ComandWithParams) {
-                        ((ComandWithParams)name).execute(storage, signature);
-                    }
-                    else if (name instanceof ComandWithoutParams) {
-                        ((ComandWithoutParams)name).execute(storage);
-                    }
+                AbstractFactory factory = new AbstractFactory();
+                Comand newComand = factory.createComand(comandName);
+
+                if (newComand instanceof ComandWithParams) {
+                    ((ComandWithParams)newComand).execute(storage, signature);
                 }             
+                else if (newComand instanceof ComandWithoutParams) {
+                    ((ComandWithoutParams)newComand).execute(storage);
+                }
             }
             catch (InstantiationException e) {
                 System.out.println("bad input");
@@ -51,7 +55,7 @@ public class ExecuteComander {
             catch (IllegalArgumentException e) {
                 System.out.println("bad input");
             }
-            catch (StackEmptyException e) {
+            catch (EmptyStackException e) {
                 System.out.println("Invisible for count");
             }
             catch (NegativeNumberException e) {

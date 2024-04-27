@@ -1,3 +1,7 @@
+package com.mot.commands;
+
+import com.mot.storage.*;
+
 public class Define implements ComandWithParams{
     @Override
     public void execute(StorageValue storage, String[] signature) {
