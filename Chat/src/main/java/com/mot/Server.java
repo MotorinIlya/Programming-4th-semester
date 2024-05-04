@@ -11,7 +11,7 @@ public class Server {
 
         Scanner in = new Scanner(socket.getInputStream());
         while(in.hasNext()) {
-            System.out.println(in.next());
+            System.out.println(in.nextLine());
         }
         in.close();
         socket.close();
