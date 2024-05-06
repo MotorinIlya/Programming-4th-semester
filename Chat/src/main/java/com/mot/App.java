@@ -1,10 +1,13 @@
 package com.mot;
 
 
+import com.mot.client.ClientWindow;
+import com.mot.controller.ChatController;
 
-public class App 
+public class App
 {
     public static void main (String[] args) {
-        System.out.println("Hello world");
+        ChatController controller = new ChatController();
+        ClientWindow window = new ClientWindow();
     }
 }

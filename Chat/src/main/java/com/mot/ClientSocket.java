@@ -9,7 +9,7 @@ public class ClientSocket {
     public static void main(String [] args) throws Exception {
         Socket socket = new Socket();
         socket.connect(new InetSocketAddress("192.168.0.12",8081));
-        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
         //Scanner cons = new Scanner(System.in);
 
