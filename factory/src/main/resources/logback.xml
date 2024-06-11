@@ -1,0 +1,18 @@
+<configuration>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/factory.log</file>
+        <append>false</append>
+        <immediateFlush>true</immediateFlush>
+        <encoder>
+            <pattern>%d %p %c{1.} %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.mot.Main" level="info" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <root level="info" additivity="false">
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
